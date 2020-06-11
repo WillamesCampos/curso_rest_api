@@ -9,11 +9,8 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", __file__)
-import django
-django.setup()
 
+import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['pontos-turisticos-willames.herokuapp.com', 'localhost:8000']
+ALLOWED_HOSTS = ['https://pontos-turisticos-willames.herokuapp.com/', 'localhost:8000']
 
 
 # Application definition
