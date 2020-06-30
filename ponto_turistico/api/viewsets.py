@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, DjangoModelPermissions
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from ponto_turistico.models import PontoTuristico
 from .serializers import PontoTuristicoSerializer
@@ -43,3 +44,29 @@ class PontoTuristicoViewSet(ModelViewSet):
     @action(methods=['POST'], detail=True)
     def denunciar(self, request, pk=None):
         return Response(request.data)
+
+
+    @action(methods=['POST'], detail=True)
+    def associa_atracoes(self, request, pk):
+        atracoes = request.data['ids']
+        try:
+            ponto = PontoTuristico.objects.get(id=pk)
+        except PontoTuristico.DoesNotExist:
+            return Response(
+                data={
+                    "Ponto Turístico não encontrado"
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        ponto.atracoes.set(atracoes)
+        ponto.save()
+
+        return Response(
+            status=status.HTTP_200_OK
+        )
+
+
+
+
+
+
